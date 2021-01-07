@@ -1,0 +1,5 @@
+C:\Users\Eric\OneDrive\Documents\GitHub\parkingValet\dotnet\Capstone\obj\Debug\netcoreapp3.1\Capstone.csprojAssemblyReference.cache
+C:\Users\Eric\OneDrive\Documents\GitHub\parkingValet\dotnet\Capstone\obj\Debug\netcoreapp3.1\Capstone.AssemblyInfoInputs.cache
+C:\Users\Eric\OneDrive\Documents\GitHub\parkingValet\dotnet\Capstone\obj\Debug\netcoreapp3.1\Capstone.AssemblyInfo.cs
+C:\Users\Eric\OneDrive\Documents\GitHub\parkingValet\dotnet\Capstone\obj\Debug\netcoreapp3.1\Capstone.csproj.CoreCompileInputs.cache
+C:\Users\Eric\OneDrive\Documents\GitHub\parkingValet\dotnet\Capstone\obj\Debug\netcoreapp3.1\Capstone.MvcApplicationPartsAssemblyInfo.cache
