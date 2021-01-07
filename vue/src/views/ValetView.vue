@@ -126,6 +126,8 @@ export default {
       checkoutButton: false,
       pickupButton: false,
       showCalcButton: false,
+      
+      
     };
   },
   methods: {

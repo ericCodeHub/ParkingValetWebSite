@@ -52,7 +52,7 @@ export default {
         (response1) => {
           if (response1.data.licensePlate != null) {
              carDetailsService.checkInCar(response1.data).then((response) => {
-              alert(response.status)
+              //alert(response.status)
               if (response.status == 201) {
                 //this.showCheckInForm = !this.showCheckInForm;
                 location.reload();

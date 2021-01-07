@@ -5,6 +5,7 @@
       occupied: parkingSpot.isOccupied,
       available: !parkingSpot.isOccupied,
     }"
+    
   >
     <p>{{ parkingSpot.parkingSpotId }}</p>
   </div>
@@ -14,6 +15,11 @@
 export default {
   name: "parking-spot",
   props: ["parkingSpot"],
+  data() {
+    return{
+      parkingLotSpot: 0,
+    };
+  },
 };
 </script>
 

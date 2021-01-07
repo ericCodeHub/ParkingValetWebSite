@@ -15,20 +15,24 @@
           placeholder="Spot Number"
         ></b-form-input>
       </b-form-group>
+      
 
       <b-button type="submit" variant="primary">Submit</b-button>
       <b-button type="reset" variant="danger">Reset</b-button>
     </b-form>
+    <h3 v-if="showSpotUpdatedMessage">Spot Number Updated</h3>
   </div>
 </template>
 
 <script>
 import ValetService from "@/services/ValetService.js";
+import ParkingService from "@/services/ParkingLotService.js";
 
 export default {
   name: "update-spot-id",
   show: false,
   props: ["ticketId"],
+  //ticketId bound from ListOfCars comp
   data() {
     return {
       form: {
@@ -39,6 +43,7 @@ export default {
       showValetCall: false,
       showPatronCar: false,
       showValetRequestMessage: false,
+      showSpotUpdatedMessage: false,
     };
   },
   methods: {
@@ -54,13 +59,36 @@ export default {
               ValetService.updateParkingSpot(
                 this.ticketId,
                 this.form.spotNumber
-              );
-              alert("Spot number updated");
-              location.reload();
+              ).then((response) => {
+                if (response.status == 201 || response.status == 200) {
+                  this.show = false;
+                  this.showSpotUpdatedMessage = true;
+                  
+                  console.log(this.parkingLotSpots);
+                  this.UpdateParkingLot();
+                  
+                  //alert(response.status);
+                  //location.reload();
+                } else {
+                  alert(response.status + " " + this.form.spotNumber + " for " + spot.parkingSpotId + " on " +this.ticketId + " because isOccupied equals " + spot.isOccupied);
+                }
+              });
+              
             }
           }
         });
       }
+    },
+    UpdateParkingLot(){
+      ParkingService.getParkingSpots()
+      .then((response) => {
+        // this.parkingSpots = response.data;
+        this.$store.commit("FILL_PARKING_SPOTS", response.data);
+        this.loadingLotData = true;
+      })
+      .finally(() => {
+        this.loadingLotData = false;
+      });
     },
     onReset(evt) {
       evt.preventDefault();
