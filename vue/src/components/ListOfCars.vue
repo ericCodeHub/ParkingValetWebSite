@@ -123,6 +123,7 @@
                     <update-spot-id
                       v-if="ParkingSpotForm"
                       v-bind:ticketId="ticketId"
+                      
                     />
                   </p>
                 </h5>
@@ -161,9 +162,7 @@ export default {
 
   components: { UpdateSpotId },
   created() {
-    ValetService.getAllTheInfo().then((response) => {
-      this.$store.commit("LOAD_CAR_LIST", response.data);
-    });
+    this.updateCars();
   },
   data() {
     return {
@@ -224,6 +223,12 @@ export default {
     showParkingSpotForm(ticketId) {
       this.ticketId = ticketId;
       this.ParkingSpotForm = !this.ParkingSpotForm;
+    },
+    updateCars(){
+      ValetService.getAllTheInfo().then((response) => {
+      this.$store.commit("LOAD_CAR_LIST", response.data);
+      
+    });
     },
   },
 };

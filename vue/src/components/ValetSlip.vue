@@ -33,7 +33,7 @@
 
     <h3 v-if="showValetCall">The valet will arrive shortly with your car.</h3>
     <div v-if="showAmountOwed"><h3>AMOUNT OWED {{ this.finalAmountOwed }}  &nbsp;
-      <b-button style="display: inline" variant="primary" size="lg" onClick="window.location.reload();">
+      <b-button style="display: inline" variant="primary" size="lg" @click="$emit('complete-checkout')">
           PAID
           </b-button></h3>
     
@@ -47,6 +47,7 @@
 import PatronCarDetails from "@/components/PatronCarDetails.vue";
 import PatronService from "@/services/PatronService.js";
 import CarDetailsService from "@/services/CarDetailsService.js";
+import ParkingService from "@/services/ParkingLotService.js";
 
 export default {
   slipId: "",
@@ -98,7 +99,7 @@ export default {
                 this.finalAmountOwed =
                   "$" + response.data.amountOwed.toFixed(2);
                 (this.show = false), (this.showAmountOwed = true);
-              
+                
               }
             );
           }
@@ -110,6 +111,16 @@ export default {
     },
     onSubmitPatronRequest() {
       this.show = false;
+    },
+    UpdateParkingLot(){
+      //this function call very similar to created method in Parking Lot component
+      ParkingService.getParkingSpots()
+      .then((response) => {
+        
+        this.$store.commit("FILL_PARKING_SPOTS", response.data);
+        
+        //this.loadingLotData = true;
+      })      
     },
     onReset(evt) {
       evt.preventDefault();

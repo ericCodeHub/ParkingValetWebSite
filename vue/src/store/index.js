@@ -49,6 +49,6 @@ export default new Vuex.Store({
     },
     FILL_PARKING_SPOTS(state, spots){
       state.parkingSpots = spots
-    }
+    },
   }
 })

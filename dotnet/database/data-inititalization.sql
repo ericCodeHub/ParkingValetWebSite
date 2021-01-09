@@ -19,19 +19,55 @@ INSERT INTO users (username, password_hash, salt, user_role) VALUES ('Andy','Yhy
 INSERT INTO users (username, password_hash, salt, user_role) VALUES ('Adam','YhyGVQ+Ch69n4JMBncM4lNF/i9s=', 'Ar/aB2thQTI=','patron');
 INSERT INTO users (username, password_hash, salt, user_role) VALUES ('Jose','YhyGVQ+Ch69n4JMBncM4lNF/i9s=', 'Ar/aB2thQTI=','patron');
 INSERT INTO users (username, password_hash, salt, user_role) VALUES ('John','YhyGVQ+Ch69n4JMBncM4lNF/i9s=', 'Ar/aB2thQTI=','patron');
+INSERT INTO users (username, password_hash, salt, user_role) VALUES ('NewGuy','YhyGVQ+Ch69n4JMBncM4lNF/i9s=', 'Ar/aB2thQTI=','patron');
+INSERT INTO users (username, password_hash, salt, user_role) VALUES ('TestPatron','YhyGVQ+Ch69n4JMBncM4lNF/i9s=', 'Ar/aB2thQTI=','patron');
+INSERT INTO users (username, password_hash, salt, user_role) VALUES ('Ima','YhyGVQ+Ch69n4JMBncM4lNF/i9s=', 'Ar/aB2thQTI=','patron');
 
 INSERT INTO patrons (user_id, first_name, last_name, phone_number,email_address) VALUES ((SELECT user_id FROM users WHERE username = 'Joe'),'Joe', 'Volpe', '555-555-5557', 'jvolpe@aol.com');
 INSERT INTO patrons (user_id, first_name, last_name, phone_number,email_address) VALUES ((SELECT user_id FROM users WHERE username = 'John'),'John', 'Doe', '555-555-5558', 'jdoe@aol.com');
 INSERT INTO patrons (user_id, first_name, last_name, phone_number,email_address) VALUES ((SELECT user_id FROM users WHERE username = 'Andy'),'Andy', 'Winger', '555-555-5559', 'awinger@aol.com');
 INSERT INTO patrons (user_id, first_name, last_name, phone_number,email_address) VALUES ((SELECT user_id FROM users WHERE username = 'Adam'),'Adam', 'Smith', '555-555-5510', 'asmith@aol.com');
 INSERT INTO patrons (user_id, first_name, last_name, phone_number,email_address) VALUES ((SELECT user_id FROM users WHERE username = 'Jose'),'Jose', 'Altuve', '555-555-5511', 'jaltuve@aol.com');
+INSERT INTO patrons (user_id, first_name, last_name, phone_number,email_address) VALUES ((SELECT user_id FROM users WHERE username = 'NewGuy'),'NewGuy', 'LovesCars', '555-555-5512', 'newguy@aol.com');
+INSERT INTO patrons (user_id, first_name, last_name, phone_number,email_address) VALUES ((SELECT user_id FROM users WHERE username = 'TestPatron'),'TestPatron', 'WantsSpot', '555-555-5513', 'testpatron@aol.com');
+INSERT INTO patrons (user_id, first_name, last_name, phone_number,email_address) VALUES ((SELECT user_id FROM users WHERE username = 'Ima'),'Ima', 'Test', '555-555-5514', 'imatest@aol.com');
 
-INSERT INTO vehicles (license_plate, patron_id, vehicle_make, vehicle_model, vehicle_color) Values ('FBC623',(SELECT patron_id FROM patrons WHERE email_address = 'jvolpe@aol.com'),'Pontiac','Trans Am','orange');
-INSERT INTO vehicles (license_plate, patron_id, vehicle_make, vehicle_model, vehicle_color) Values ('GBC723',(SELECT patron_id FROM patrons WHERE email_address = 'jdoe@aol.com'),'Chevy','Chevelle','red');
-INSERT INTO vehicles (license_plate, patron_id, vehicle_make, vehicle_model, vehicle_color) Values ('IBC923',(SELECT patron_id FROM patrons WHERE email_address = 'jaltuve@aol.com'),'Plymouth','Super Bird','orange');
+INSERT INTO vehicles (license_plate, patron_id, vehicle_make, vehicle_model, vehicle_color) 
+	Values ('FBC623',(SELECT patron_id FROM patrons WHERE email_address = 'jvolpe@aol.com'),'Pontiac','Trans Am','orange');
+INSERT INTO vehicles (license_plate, patron_id, vehicle_make, vehicle_model, vehicle_color) 
+	Values ('GBC723',(SELECT patron_id FROM patrons WHERE email_address = 'jdoe@aol.com'),'Chevy','Chevelle','red');
+INSERT INTO vehicles (license_plate, patron_id, vehicle_make, vehicle_model, vehicle_color) 
+	Values ('IBC923',(SELECT patron_id FROM patrons WHERE email_address = 'jaltuve@aol.com'),'Plymouth','Super Bird','orange');
+INSERT INTO vehicles (license_plate, patron_id, vehicle_make, vehicle_model, vehicle_color) 
+	Values ('NEWCAR1',(SELECT patron_id FROM patrons WHERE email_address = 'awinger@aol.com'),'Chevy','Bolt','Grey');
+INSERT INTO vehicles (license_plate, patron_id, vehicle_make, vehicle_model, vehicle_color) 
+	Values ('NEWCAR2',(SELECT patron_id FROM patrons WHERE email_address = 'asmith@aol.com'),'Tesla','Model3','White');
+INSERT INTO vehicles (license_plate, patron_id, vehicle_make, vehicle_model, vehicle_color) 
+	Values ('NEWCAR3',(SELECT patron_id FROM patrons WHERE email_address = 'jvolpe@aol.com'),'Plymouth','Super Bird','orange');
+INSERT INTO vehicles (license_plate, patron_id, vehicle_make, vehicle_model, vehicle_color) 
+	Values ('NEWCAR4',(SELECT patron_id FROM patrons WHERE email_address = 'jdoe@aol.com'),'Plymouth','Super Bird','orange');
+INSERT INTO vehicles (license_plate, patron_id, vehicle_make, vehicle_model, vehicle_color) 
+	Values ('NEWCAR5',(SELECT patron_id FROM patrons WHERE email_address = 'jaltuve@aol.com'),'Plymouth','Super Bird','orange');
+INSERT INTO vehicles (license_plate, patron_id, vehicle_make, vehicle_model, vehicle_color) 
+	Values ('NEWCAR6',(SELECT patron_id FROM patrons WHERE email_address = 'awinger@aol.com'),'Plymouth','Super Bird','orange');
+INSERT INTO vehicles (license_plate, patron_id, vehicle_make, vehicle_model, vehicle_color) 
+	Values ('NEWCAR7',(SELECT patron_id FROM patrons WHERE email_address = 'asmith@aol.com'),'Plymouth','Super Bird','orange');
+INSERT INTO vehicles (license_plate, patron_id, vehicle_make, vehicle_model, vehicle_color) 
+	Values ('NEWCAR8',(SELECT patron_id FROM patrons WHERE email_address = 'newguy@aol.com'),'Plymouth','Super Bird','orange');
+INSERT INTO vehicles (license_plate, patron_id, vehicle_make, vehicle_model, vehicle_color) 
+	Values ('NEWCAR9',(SELECT patron_id FROM patrons WHERE email_address = 'testpatron@aol.com'),'Plymouth','Super Bird','orange');
+INSERT INTO vehicles (license_plate, patron_id, vehicle_make, vehicle_model, vehicle_color) 
+	Values ('NEWCAR100',(SELECT patron_id FROM patrons WHERE email_address = 'imatest@aol.com'),'Plymouth','Super Bird','orange');
+INSERT INTO vehicles (license_plate, patron_id, vehicle_make, vehicle_model, vehicle_color) 
+	Values ('NEWCAR101',(SELECT patron_id FROM patrons WHERE email_address = 'newguy@aol.com'),'Plymouth','Super Bird','orange');
+INSERT INTO vehicles (license_plate, patron_id, vehicle_make, vehicle_model, vehicle_color) 
+	Values ('NEWCAR102',(SELECT patron_id FROM patrons WHERE email_address = 'testpatron@aol.com'),'Plymouth','Super Bird','orange');
+INSERT INTO vehicles (license_plate, patron_id, vehicle_make, vehicle_model, vehicle_color) 
+	Values ('NEWCAR103',(SELECT patron_id FROM patrons WHERE email_address = 'imatest@aol.com'),'Plymouth','Super Bird','orange');
 
-INSERT INTO vehicles (license_plate, patron_id, vehicle_make, vehicle_model, vehicle_color) Values ('NEWCAR1',(SELECT patron_id FROM patrons WHERE email_address = 'awinger@aol.com'),'Chevy','Bolt','Grey');
-INSERT INTO vehicles (license_plate, patron_id, vehicle_make, vehicle_model, vehicle_color) Values ('NEWCAR2',(SELECT patron_id FROM patrons WHERE email_address = 'asmith@aol.com'),'Tesla','Model3','White');
+
+
+
 
 INSERT INTO valet_slips (valet_id, license_plate, parking_spot_id, date, time_in, time_out, amount_owed, parking_status_id) VALUES (1, 'NEWCAR1', NULL, GETDATE(), (SELECT DATEADD(minute, -20, GETDATE())), '1753-1-1', 0, 2);
 INSERT INTO valet_slips (valet_id, license_plate, parking_spot_id, date, time_in, time_out, amount_owed, parking_status_id) VALUES (1, 'NEWCAR2', NULL, GETDATE(), (SELECT DATEADD(minute, -40, GETDATE())), '1753-1-1', 0, 2);

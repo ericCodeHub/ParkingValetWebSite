@@ -12,7 +12,7 @@
           v-model="form.spotNumber"
           type="text"
           required
-          placeholder="Spot Number"
+          placeholder="Spot Number"          
         ></b-form-input>
       </b-form-group>
       
@@ -65,7 +65,10 @@ export default {
                   this.showSpotUpdatedMessage = true;
                   
                   console.log(this.parkingLotSpots);
+                  //this.UpdateParkingLot();
                   this.UpdateParkingLot();
+                  //this.$store.commit("LOAD_CAR_LIST", response.data);
+                  //this.UpdateCar();
                   
                   //alert(response.status);
                   //location.reload();
@@ -80,16 +83,20 @@ export default {
       }
     },
     UpdateParkingLot(){
+      //this function call very similar to created method in Parking Lot component
       ParkingService.getParkingSpots()
       .then((response) => {
-        // this.parkingSpots = response.data;
+        
         this.$store.commit("FILL_PARKING_SPOTS", response.data);
-        this.loadingLotData = true;
-      })
-      .finally(() => {
-        this.loadingLotData = false;
-      });
+        //this.loadingLotData = true;
+      })      
     },
+    UpdateCar() {
+      //same call made in List Of Cars component (UpdateCars())
+      ValetService.getAllTheInfo().then((response) => {
+      this.$store.commit("LOAD_CAR_LIST", response.data); 
+      })     
+    },    
     onReset(evt) {
       evt.preventDefault();
       // Reset our form values
