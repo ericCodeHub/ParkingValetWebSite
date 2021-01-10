@@ -163,6 +163,7 @@ export default {
     CompleteCheckOut(){
         this.UpdateParkingLot()
         this.showValetSlipIdForm = !this.showValetSlipIdForm;//hide valet slip id component
+        this.checkoutButton = !this.checkoutButton;
     },
     UpdateParkingLot(){
       //this function call very similar to created method in Parking Lot component

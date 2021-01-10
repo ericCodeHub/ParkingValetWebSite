@@ -46,15 +46,40 @@
         :sort-desc.sync="sortDesc"
         :sort-direction="sortDirection"
         @filtered="onFiltered"
+        
       >
+      <!--I know now why this is here so commented out
         <template #cell(name)="row">
-          {{ row.value.first }} {{ row.value.last }}
+          where is this?{{ row.value.first }} {{ row.value.last }}
+        </template>-->
+        <template #cell(amountowed)="row">
+          ${{ calcTime(row.item.timeIn) }}
         </template>
-
-        <template #cell(actions)="row">
-          <b-button size="sm" @click="row.toggleDetails">
-            {{ row.detailsShowing ? "Hide" : "Show" }} Details
-          </b-button>
+        <template #cell(actions)="row" >
+          <div v-if="!hideAllButtons">
+            <b-button size="sm" @click="row.toggleDetails">
+              {{ row.detailsShowing ? "Hide" : "Show" }} Details
+            </b-button>
+            <b-button size="sm" @click="showParkingSpotForm(row.item.ticketId,false)">
+              Park Car
+              
+            </b-button>
+            
+            <b-button size="sm" @click="row.toggleDetails">
+              Check Out Car
+            </b-button>
+            <b-button size="sm" @click="row.toggleDetails">
+              Request Pickup
+            </b-button>
+            </div>
+            <div>
+          <update-spot-id
+                        v-if="parkingSpotForm"
+                        v-bind:ticketId="ticketId"
+                        v-bind:request="request"
+                        v-on:unhide-buttons="hideAllButtons=false, ParkingSpotForm = false" 
+            />
+            </div>
         </template>
 
         <template #row-details="row">
@@ -117,13 +142,14 @@
                     {{ row.item.parkingSpotId }}
                   </p>
                   <p>
-                    <button @click="showParkingSpotForm(row.item.ticketId)">
+                    <button @click="showParkingSpotForm(row.item.ticketId, true)">
                       update parking spot
                     </button>
                     <update-spot-id
-                      v-if="ParkingSpotForm"
-                      v-bind:ticketId="ticketId"
-                      
+                      v-if="parkingSpotForm"
+                      v-bind:ticketId="ticketId" 
+                      v-bind:request="request" 
+                      v-on:unhide-buttons="hideAllButtons=false, ParkingSpotForm = false"                                    
                     />
                   </p>
                 </h5>
@@ -162,23 +188,24 @@ export default {
 
   components: { UpdateSpotId },
   created() {
-    this.updateCars();
+    this.UpdateCars();
   },
   data() {
     return {
       fields: [
         { key: "ticketId", sortable: true, class: "text-center" },
-        { key: "vehicleMake", sortable: true, class: "text-center" },
-        { key: "vehicleModel", sortable: true, class: "text-center" },
-        { key: "licensePlate", sortable: true, class: "text-center" },
-        { key: "parkingSpotId", sortable: true, class: "text-center" },
+        { key: "vehicleMake", label: "make", sortable: true, class: "text-center" },
+        { key: "vehicleModel", label: "model", sortable: true, class: "text-center" },
+        { key: "licensePlate", label: "plate", sortable: true, class: "text-center" },
+        { key: "parkingSpotId", label: "location", sortable: true, class: "text-center" },
+        { key: "AmountOwed", label: "balance", sortable: true, class: "text-center" },
 
         {
           sortable: true,
           sortByFormatted: true,
           filterByFormatted: true,
         },
-        { key: "actions", label: "Actions" },
+        { key: "actions", label: "Actions", class: "text-center" },
       ],
       perPage: 1000, // this is the max number of cars displayed in the list
       sortBy: "",
@@ -186,8 +213,10 @@ export default {
       sortDirection: "asc",
       filter: null,
       filterOn: [],
-      ParkingSpotForm: false,
+      parkingSpotForm: false,
       ticketId: "",
+      request: "",
+      hideAllButtons: false,
     };
   },
   computed: {
@@ -220,16 +249,28 @@ export default {
       this.totalRows = filteredItems.length;
       this.currentPage = 1;
     },
-    showParkingSpotForm(ticketId) {
+    showParkingSpotForm(ticketId, showLabels) {
       this.ticketId = ticketId;
-      this.ParkingSpotForm = !this.ParkingSpotForm;
+      this.request = showLabels;
+      this.parkingSpotForm = true;
+      this.hideAllButtons = !showLabels ? true : false;
     },
-    updateCars(){
+    UpdateCars(){
       ValetService.getAllTheInfo().then((response) => {
       this.$store.commit("LOAD_CAR_LIST", response.data);
       
+      //alert("what up?")
     });
+    this.$forceUpdate();
     },
+    cancelButton() {
+      this.hideAllButtons=false;
+      this.showParkingSpotForm=false;
+    },
+    tryOut(){
+      
+      alert("hey there!");
+    }
   },
 };
 </script>

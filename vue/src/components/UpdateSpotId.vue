@@ -1,24 +1,32 @@
 <template>
   <div>
-    <b-form @submit.prevent="UpdateSpotNumber" @reset="onReset" v-if="show">
+    <b-form @submit.prevent="UpdateSpotNumber" @reset="onCancel" v-if="show" :class="this.request ? 'horizontal-buttons' : 'vertical-buttons'">
       <b-form-group
         id="Spot Label"
         label="Enter Spot Number:"
         label-for="Spot Label"
         description="Enter Spot Number"
+        v-if="this.request"
       >
+      </b-form-group>
+      <b-col sm="3">
         <b-form-input
           id="Spot Number Input"
           v-model="form.spotNumber"
           type="text"
           required
           placeholder="Spot Number"          
-        ></b-form-input>
-      </b-form-group>
+        ></b-form-input></b-col>
       
-
-      <b-button type="submit" variant="primary">Submit</b-button>
-      <b-button type="reset" variant="danger">Reset</b-button>
+      
+      <b-col :sm="this.request ? '3' : '2'">
+      <b-button type="submit" variant="primary" @click="$emit('spot-update')">Submit</b-button>
+      <!--spot-update is in List Of Cars component-->
+      </b-col>
+      <b-col :sm="this.request ? '3' : '2'">
+      <b-button type="reset" variant="danger" @click="$emit('unhide-buttons')">Cancel</b-button>
+      <!--unhide-buttons is in List Of Cars component--></b-col>
+      
     </b-form>
     <h3 v-if="showSpotUpdatedMessage">Spot Number Updated</h3>
   </div>
@@ -30,8 +38,8 @@ import ParkingService from "@/services/ParkingLotService.js";
 
 export default {
   name: "update-spot-id",
-  show: false,
-  props: ["ticketId"],
+  
+  props: ["ticketId", "request"],
   //ticketId bound from ListOfCars comp
   data() {
     return {
@@ -39,13 +47,24 @@ export default {
         spotNumber: "",
         name: "",
       },
-      show: true,
+      show: "",
       showValetCall: false,
       showPatronCar: false,
       showValetRequestMessage: false,
       showSpotUpdatedMessage: false,
+      
     };
   },
+  /*created() {
+      this.show=this.parkingSpotForm;
+  },
+  watch: {
+    show: function() {
+      return true;
+      //return this.parkingSportForm;
+    }
+  },*/
+  
   methods: {
     UpdateSpotNumber() {
       if (this.form.spotNumber < 1 || this.form.spotNumber > 10) {
@@ -67,8 +86,8 @@ export default {
                   console.log(this.parkingLotSpots);
                   //this.UpdateParkingLot();
                   this.UpdateParkingLot();
-                  //this.$store.commit("LOAD_CAR_LIST", response.data);
-                  //this.UpdateCar();
+                  
+                  this.UpdateCar();//contains updated spot car is in
                   
                   //alert(response.status);
                   //location.reload();
@@ -96,20 +115,29 @@ export default {
       ValetService.getAllTheInfo().then((response) => {
       this.$store.commit("LOAD_CAR_LIST", response.data); 
       })     
-    },    
-    onReset(evt) {
+    },
+    
+    onCancel(evt) {
       evt.preventDefault();
       // Reset our form values
-      this.form.email = "";
-      this.form.name = "";
-      this.form.food = null;
-      this.form.checked = [];
+      this.form.spotNumber="";
+      
       // Trick to reset/clear native browser form validation state
       this.show = false;
-      this.$nextTick(() => {
+      /*this.$nextTick(() => {
         this.show = true;
-      });
+      });*/
     },
   },
 };
 </script>
+<style>
+.vertical-buttons{
+  display: flex;
+}
+.horizontal-buttons{
+  display: flex;
+  flex-direction: column;
+  
+}
+</style>

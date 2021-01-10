@@ -34,6 +34,7 @@
     <h3 v-if="showValetCall">The valet will arrive shortly with your car.</h3>
     <div v-if="showAmountOwed"><h3>AMOUNT OWED {{ this.finalAmountOwed }}  &nbsp;
       <b-button style="display: inline" variant="primary" size="lg" @click="$emit('complete-checkout')">
+      <!--complete-checkout is in ValetView component-->
           PAID
           </b-button></h3>
     
