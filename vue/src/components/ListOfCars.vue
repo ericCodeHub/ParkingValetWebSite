@@ -47,6 +47,7 @@
         :sort-direction="sortDirection"
         @filtered="onFiltered"
         
+        
       >
       <!--I know now why this is here so commented out
         <template #cell(name)="row">
@@ -60,15 +61,15 @@
             <b-button size="sm" @click="row.toggleDetails">
               {{ row.detailsShowing ? "Hide" : "Show" }} Details
             </b-button>
-            <b-button size="sm" @click="showParkingSpotForm(row.item.ticketId,false)">
+            <b-button size="sm" @click="showParkingSpotForm(row.item.ticketId,false, row.item.licensePlate), filter=row.item.licensePlate">
               Park Car
               
             </b-button>
             
-            <b-button size="sm" @click="row.toggleDetails">
+            <b-button size="sm" @click="tryOut(row.item.licensePlate)">
               Check Out Car
             </b-button>
-            <b-button size="sm" @click="row.toggleDetails">
+            <b-button size="sm" @click="filter=row.item.licensePlate">
               Request Pickup
             </b-button>
             </div>
@@ -77,7 +78,7 @@
                         v-if="parkingSpotForm"
                         v-bind:ticketId="ticketId"
                         v-bind:request="request"
-                        v-on:unhide-buttons="hideAllButtons=false, ParkingSpotForm = false" 
+                        v-on:unhide-buttons="hideAllButtons=false, parkingSpotForm=false, filter=null" 
             />
             </div>
         </template>
@@ -142,14 +143,14 @@
                     {{ row.item.parkingSpotId }}
                   </p>
                   <p>
-                    <button @click="showParkingSpotForm(row.item.ticketId, true)">
+                    <button @click="showParkingSpotForm(row.item.ticketId, true, row.item.licensePlate)">
                       update parking spot
                     </button>
                     <update-spot-id
                       v-if="parkingSpotForm"
                       v-bind:ticketId="ticketId" 
                       v-bind:request="request" 
-                      v-on:unhide-buttons="hideAllButtons=false, ParkingSpotForm = false"                                    
+                      v-on:unhide-buttons="hideAllButtons=false, parkingSpotForm = false"                                    
                     />
                   </p>
                 </h5>
@@ -249,7 +250,9 @@ export default {
       this.totalRows = filteredItems.length;
       this.currentPage = 1;
     },
-    showParkingSpotForm(ticketId, showLabels) {
+    showParkingSpotForm(ticketId, showLabels, recordId) {
+      //recordId should typically be the license plate
+      console.log(recordId);
       this.ticketId = ticketId;
       this.request = showLabels;
       this.parkingSpotForm = true;
@@ -267,9 +270,11 @@ export default {
       this.hideAllButtons=false;
       this.showParkingSpotForm=false;
     },
-    tryOut(){
+    tryOut(recordId){
       
-      alert("hey there!");
+      alert(recordId);
+      //this.filter = recordId;
+      //this.$refs.table.filter("13");
     }
   },
 };

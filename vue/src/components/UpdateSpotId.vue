@@ -28,8 +28,18 @@
       <!--unhide-buttons is in List Of Cars component--></b-col>
       
     </b-form>
-    <h3 v-if="showSpotUpdatedMessage">Spot Number Updated</h3>
+
+    <div v-if="showSpotUpdatedMessage" class="vertical-buttons">
+      <b-col>
+      <h3 >Spot Number Updated</h3>
+      </b-col>
+      <b-col sm="3">
+      <b-button variant="primary" @click="$emit('unhide-buttons')">Ok</b-button>
+      </b-col>
+    </div>
+
   </div>
+
 </template>
 
 <script>
@@ -47,7 +57,7 @@ export default {
         spotNumber: "",
         name: "",
       },
-      show: "",
+      show: true,
       showValetCall: false,
       showPatronCar: false,
       showValetRequestMessage: false,

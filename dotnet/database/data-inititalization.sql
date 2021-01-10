@@ -43,27 +43,27 @@ INSERT INTO vehicles (license_plate, patron_id, vehicle_make, vehicle_model, veh
 INSERT INTO vehicles (license_plate, patron_id, vehicle_make, vehicle_model, vehicle_color) 
 	Values ('NEWCAR2',(SELECT patron_id FROM patrons WHERE email_address = 'asmith@aol.com'),'Tesla','Model3','White');
 INSERT INTO vehicles (license_plate, patron_id, vehicle_make, vehicle_model, vehicle_color) 
-	Values ('NEWCAR3',(SELECT patron_id FROM patrons WHERE email_address = 'jvolpe@aol.com'),'Plymouth','Super Bird','orange');
+	Values ('NEWCAR3',(SELECT patron_id FROM patrons WHERE email_address = 'jvolpe@aol.com'),'Cadillac','El Dorado','black');
 INSERT INTO vehicles (license_plate, patron_id, vehicle_make, vehicle_model, vehicle_color) 
-	Values ('NEWCAR4',(SELECT patron_id FROM patrons WHERE email_address = 'jdoe@aol.com'),'Plymouth','Super Bird','orange');
+	Values ('NEWCAR4',(SELECT patron_id FROM patrons WHERE email_address = 'jdoe@aol.com'),'Chevy','Chevelle','red');
 INSERT INTO vehicles (license_plate, patron_id, vehicle_make, vehicle_model, vehicle_color) 
-	Values ('NEWCAR5',(SELECT patron_id FROM patrons WHERE email_address = 'jaltuve@aol.com'),'Plymouth','Super Bird','orange');
+	Values ('NEWCAR5',(SELECT patron_id FROM patrons WHERE email_address = 'jaltuve@aol.com'),'Oldsmobile','442','cherry red');
 INSERT INTO vehicles (license_plate, patron_id, vehicle_make, vehicle_model, vehicle_color) 
-	Values ('NEWCAR6',(SELECT patron_id FROM patrons WHERE email_address = 'awinger@aol.com'),'Plymouth','Super Bird','orange');
+	Values ('NEWCAR6',(SELECT patron_id FROM patrons WHERE email_address = 'awinger@aol.com'),'Pontiac','GTO','black');
 INSERT INTO vehicles (license_plate, patron_id, vehicle_make, vehicle_model, vehicle_color) 
-	Values ('NEWCAR7',(SELECT patron_id FROM patrons WHERE email_address = 'asmith@aol.com'),'Plymouth','Super Bird','orange');
+	Values ('NEWCAR7',(SELECT patron_id FROM patrons WHERE email_address = 'asmith@aol.com'),'Oldsmobile','442','cherry red');
 INSERT INTO vehicles (license_plate, patron_id, vehicle_make, vehicle_model, vehicle_color) 
-	Values ('NEWCAR8',(SELECT patron_id FROM patrons WHERE email_address = 'newguy@aol.com'),'Plymouth','Super Bird','orange');
+	Values ('NEWCAR8',(SELECT patron_id FROM patrons WHERE email_address = 'newguy@aol.com'),'Chevy','Camaro SS','red');
 INSERT INTO vehicles (license_plate, patron_id, vehicle_make, vehicle_model, vehicle_color) 
-	Values ('NEWCAR9',(SELECT patron_id FROM patrons WHERE email_address = 'testpatron@aol.com'),'Plymouth','Super Bird','orange');
+	Values ('NEWCAR9',(SELECT patron_id FROM patrons WHERE email_address = 'testpatron@aol.com'),'Saturn','SL1','orange');
 INSERT INTO vehicles (license_plate, patron_id, vehicle_make, vehicle_model, vehicle_color) 
-	Values ('NEWCAR100',(SELECT patron_id FROM patrons WHERE email_address = 'imatest@aol.com'),'Plymouth','Super Bird','orange');
+	Values ('NEWCAR100',(SELECT patron_id FROM patrons WHERE email_address = 'imatest@aol.com'),'Chevy','Silverado','metallic gray');
 INSERT INTO vehicles (license_plate, patron_id, vehicle_make, vehicle_model, vehicle_color) 
-	Values ('NEWCAR101',(SELECT patron_id FROM patrons WHERE email_address = 'newguy@aol.com'),'Plymouth','Super Bird','orange');
+	Values ('NEWCAR101',(SELECT patron_id FROM patrons WHERE email_address = 'newguy@aol.com'),'Ford','F150','blue');
 INSERT INTO vehicles (license_plate, patron_id, vehicle_make, vehicle_model, vehicle_color) 
-	Values ('NEWCAR102',(SELECT patron_id FROM patrons WHERE email_address = 'testpatron@aol.com'),'Plymouth','Super Bird','orange');
+	Values ('NEWCAR102',(SELECT patron_id FROM patrons WHERE email_address = 'testpatron@aol.com'),'Honda','Passport','brown');
 INSERT INTO vehicles (license_plate, patron_id, vehicle_make, vehicle_model, vehicle_color) 
-	Values ('NEWCAR103',(SELECT patron_id FROM patrons WHERE email_address = 'imatest@aol.com'),'Plymouth','Super Bird','orange');
+	Values ('NEWCAR103',(SELECT patron_id FROM patrons WHERE email_address = 'imatest@aol.com'),'Ford','Pinto','orange');
 
 
 
