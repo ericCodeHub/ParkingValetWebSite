@@ -34,7 +34,7 @@
       <h3 >Spot Number Updated</h3>
       </b-col>
       <b-col sm="3">
-      <b-button variant="primary" @click="$emit('unhide-buttons')">Ok</b-button>
+      <b-button variant="success" @click="$emit('unhide-buttons')">Ok</b-button>
       </b-col>
     </div>
 
@@ -121,7 +121,7 @@ export default {
       })      
     },
     UpdateCar() {
-      //same call made in List Of Cars component (UpdateCars())
+      //same call made in List Of Cars component (UpdateListOfCars())
       ValetService.getAllTheInfo().then((response) => {
       this.$store.commit("LOAD_CAR_LIST", response.data); 
       })     

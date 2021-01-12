@@ -8,27 +8,51 @@
     >
       REQUEST CAR PICKUP
     </h3>
-    <h3 v-if="this.valetSelection == 'checkoutCar'">CHECK-OUT</h3>
+    <h3 v-if="ShowLabels" >CHECK-OUT</h3>
     <h3 v-if="this.patronSelection == 'showBalance'">VIEW BALANCE</h3>
-
-    <b-form @submit="PatronCarDetailsSubmit" @reset="onReset" v-if="show">
-      <b-form-group
-        id="input-group-1"
-        label="Enter Valet Slip Number:"
-        label-for="input-1"
-        description="Please enter your valet slip number."
-      >
+    
+      <b-form @submit="PatronCarDetailsSubmit" @reset="onReset" v-if="show" class="vertical-buttons">
+        <b-col sm="3">
+          
+        <b-form-group
+          id="input-group-1"
+          label="Enter Valet Slip Number:"
+          label-for="input-1"
+          description="Please enter your valet slip number."
+          v-if="ShowLabels"
+        >
+        
+          <b-form-input
+            id="input-1"
+            v-model="form.valetSlipNumber"
+            type="text"
+            required
+            placeholder="Enter Valet Slip Number"
+            
+          >
+          </b-form-input>
+        </b-form-group>
         <b-form-input
-          id="input-1"
-          v-model="form.valetSlipNumber"
-          type="text"
-          required
-          placeholder="Valet Slip Number"
-        ></b-form-input>
-      </b-form-group>
-
-      <b-button type="submit" variant="primary">Submit</b-button>
-      <b-button type="reset" variant="danger">Reset</b-button>
+            id="input-1"
+            v-model="form.valetSlipNumber"
+            type="text"
+            required
+            placeholder="Enter Valet Slip Number"
+            v-if="!ShowLabels"
+          >
+          </b-form-input>
+      </b-col>
+      <b-row align-v="center" >
+        <b-col sm="3">
+          <b-button type="submit" variant="primary">Submit</b-button>
+        </b-col>
+        <b-col sm="3">
+          <b-button type="reset" variant="warning">Reset</b-button>
+        </b-col>
+        <b-col sm="3">
+            <b-button @click="onCancel, $emit('click-cancel')" variant="danger" class="h-75">Cancel</b-button>
+        </b-col>
+      </b-row>
     </b-form>
 
     <h3 v-if="showValetCall">The valet will arrive shortly with your car.</h3>
@@ -52,7 +76,8 @@ import ParkingService from "@/services/ParkingLotService.js";
 
 export default {
   slipId: "",
-  props: ["patronSelection", "valetSelection"],
+  
+  props: ["patronSelection", "valetSelection", "request", "ticketId"],
   data() {
     return {
       form: {
@@ -66,9 +91,25 @@ export default {
       finalAmountOwed: "",
       showAmountOwed: false,
       showValetRequestMessage: false,
+      
     };
   },
   components: { PatronCarDetails },
+  computed: {
+    ShowLabels() {
+      console.log(this.request)
+      if (this.valetSelection == 'checkoutCar') {
+        if (this.request == undefined || this.request) {          
+          return true
+        } else {
+          return false
+        }
+      } else {
+        return false
+      }      
+                 
+    }
+  },
   methods: {
     PatronCarDetailsSubmit(evt) {
       evt.preventDefault();
@@ -100,9 +141,12 @@ export default {
                 this.finalAmountOwed =
                   "$" + response.data.amountOwed.toFixed(2);
                 (this.show = false), (this.showAmountOwed = true);
+
                 
               }
+              
             );
+            
           }
         } else {
           //if id doesn't exist/entered incorrectly do this
@@ -132,6 +176,11 @@ export default {
       this.$nextTick(() => {
         this.show = true;
       });
+    },
+    onCancel(evt) {
+      evt.preventDefault();
+      this.form.slipId = "";
+      this.show = false;
     },
   },
 };

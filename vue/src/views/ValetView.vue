@@ -14,6 +14,8 @@
             notpressed: !showCheckInForm,
             pressed: showCheckInForm,
           }"
+          
+          
           >Check-In</b-button
         >
         <b-button
@@ -81,18 +83,23 @@
 
     <div class="valetTopRightDiv">
       <div class="componentsValet" v-if="showLicensePlateEntry">
-        <license-plate-entry />
+        <license-plate-entry v-on:clickOk="showLicensePlateEntry=false, showCheckInForm=false, UpdateListOfCars()"
+        />
+      </div>
+      <div class="componentsValet" v-if="showValetSlipIdForm" >
+        <valet-slip v-bind:valetSelection="valetSelection" @complete-checkout="CompleteCheckOut(), this.showValetSlipIdForm = !this.showValetSlipIdForm,
+        this.checkoutButton = !this.checkoutButton" v-on:click-cancel="checkoutButton = false, showValetSlipIdForm=false"
+        
+        />
       </div>
 
-      <div class="componentsValet" v-if="showListOfCars">
-        <list-of-cars />
+      <div class="componentsValet" v-if="showListOfCars"  v-on:clickOk="checkoutButton = false, showValetSlipIdForm=false">
+        <list-of-cars @complete-checkout="CompleteCheckOut()"/>
       </div>
       <div class="componentsValet" v-if="showRequestedCars">
         <cars-req-for-pickup v-if="showRequestedCars" />
       </div>
-      <div class="componentsValet" v-if="showValetSlipIdForm" >
-        <valet-slip v-bind:valetSelection="valetSelection" @complete-checkout="CompleteCheckOut()" />
-      </div>
+      
 
       <parking-lot id="home-parking-lot-container" v-if="showLotTop" />
     </div>
@@ -106,6 +113,7 @@ import ValetSlip from "../components/ValetSlip.vue";
 import LicensePlateEntry from "../components/LicensePlateEntry.vue";
 import CarsReqForPickup from "../components/CarsReqForPickup.vue";
 import ParkingService from "@/services/ParkingLotService.js";
+import ValetService from "@/services/ValetService.js";
 
 export default {
   components: {
@@ -162,8 +170,8 @@ export default {
     },
     CompleteCheckOut(){
         this.UpdateParkingLot()
-        this.showValetSlipIdForm = !this.showValetSlipIdForm;//hide valet slip id component
-        this.checkoutButton = !this.checkoutButton;
+       
+        this.UpdateListOfCars();
     },
     UpdateParkingLot(){
       //this function call very similar to created method in Parking Lot component
@@ -174,6 +182,12 @@ export default {
         
         //this.loadingLotData = true;
       })      
+    },
+    UpdateListOfCars(){
+      //same call made in List Of Cars component (UpdateListOfCars())
+      ValetService.getAllTheInfo().then((response) => {
+      this.$store.commit("LOAD_CAR_LIST", response.data);
+      })
     },
   },
 };

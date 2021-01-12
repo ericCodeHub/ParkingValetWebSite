@@ -1,26 +1,44 @@
 <template>
   <div>
     <h3>CHECK-IN</h3>
-    <b-form @submit="LicensePlateSubmit" @reset="onReset" v-if="show">
-      <b-form-group
-        id="license-plate-entry-label"
-        label="Enter License Plate:"
-        label-for="license-plate-entry"
-        description="Please enter the car's license plate."
-      >
-        <b-form-input
-          id="license-plate-input"
-          v-model="form.licensePlate"
-          type="text"
-          required
-          placeholder="License Plate"
-        ></b-form-input>
-      </b-form-group>
-      <b-button type="submit" variant="primary">Submit</b-button>
-      <b-button type="reset" variant="danger">Reset</b-button>
+    
+    <b-form @submit="LicensePlateSubmit" @reset="onReset" v-if="show" class="vertical-buttons" >
+      <b-col sm="3">
+        <b-form-group
+          id="license-plate-entry-label"
+          label="Enter License Plate:"
+          label-for="license-plate-entry"
+          description="Please enter the car's license plate."
+        >
+          <b-form-input
+            id="license-plate-input"
+            v-model="form.licensePlate"
+            type="text"
+            required
+            placeholder="License Plate"
+          >
+          </b-form-input>
+        </b-form-group>
+      </b-col>
+      <b-row align-v="center" >
+        <b-col sm="3">
+          <b-button type="submit" variant="primary" class="h-50" >Submit</b-button>
+        </b-col>
+        <b-col sm="3">
+          <b-button type="reset" variant="warning" class="h-75">Reset</b-button>
+        </b-col>
+        <b-col sm="3">
+          <b-button @click="onCancel, $emit('clickOk')" variant="danger" class="h-75">Cancel</b-button>
+        </b-col>
+      </b-row>
     </b-form>
     <check-in-car v-if="showCheckInForm" v-bind:licensePlate="licensePlate" />
-    <h3 v-if="confirmCarAddedMessage">Valet Slip has been created for car</h3>
+    <div v-if="confirmCarAddedMessage" class="vertical-buttons">
+      <h3 >Returning customer: Valet Slip has been created</h3>
+      <b-col sm="3">
+      <b-button variant="success" @click="$emit('clickOk')">Ok</b-button>
+      </b-col>
+    </div>
   </div>
 </template>
 <script>
@@ -55,7 +73,7 @@ export default {
               //alert(response.status)
               if (response.status == 201) {
                 //this.showCheckInForm = !this.showCheckInForm;
-                location.reload();
+                //location.reload();//why reload here?
               } else {
                 console.log("Car not created.");
               }
@@ -88,6 +106,11 @@ export default {
         this.show = true;
       });
     },
+    onCancel(evt) {
+      evt.preventDefault();
+      this.form.licensePlate = "";
+      this.show = false;
+    }
   },
 };
 </script>

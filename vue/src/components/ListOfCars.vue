@@ -66,7 +66,7 @@
               
             </b-button>
             
-            <b-button size="sm" @click="tryOut(row.item.licensePlate)">
+            <b-button size="sm" @click="showValetSlipForm(row.item.ticketId, false, row.item.licensePlate), filter=row.item.licensePlate">
               Check Out Car
             </b-button>
             <b-button size="sm" @click="filter=row.item.licensePlate">
@@ -80,6 +80,13 @@
                         v-bind:request="request"
                         v-on:unhide-buttons="hideAllButtons=false, parkingSpotForm=false, filter=null" 
             />
+            <valet-slip v-if="valetSlipForm" v-bind:ticketId="ticketId" 
+            v-bind:request="request"
+            v-bind:valetSelection="valetSelection"
+            v-on:complete-checkout="hideAllButtons=false, valetSlipForm = false, filter=null, $emit('complete-checkout')"
+            v-on:click-cancel="hideAllButtons=false, valetSlipForm = false, filter=null"
+            />
+            
             </div>
         </template>
 
@@ -183,13 +190,14 @@
 import ValetService from "@/services/ValetService.js";
 import moment from "moment";
 import UpdateSpotId from "@/components/UpdateSpotId.vue";
+import ValetSlip from './ValetSlip.vue';
 
 export default {
   name: "list-of-cars",
 
-  components: { UpdateSpotId },
+  components: { UpdateSpotId, ValetSlip },
   created() {
-    this.UpdateCars();
+    this.UpdateListOfCars();
   },
   data() {
     return {
@@ -215,6 +223,8 @@ export default {
       filter: null,
       filterOn: [],
       parkingSpotForm: false,
+      valetSlipForm: false,
+      valetSelection: "",
       ticketId: "",
       request: "",
       hideAllButtons: false,
@@ -258,7 +268,16 @@ export default {
       this.parkingSpotForm = true;
       this.hideAllButtons = !showLabels ? true : false;
     },
-    UpdateCars(){
+    showValetSlipForm(ticketId, showLabels, recordId) {
+      //recordId should typically be the license plate
+      console.log(recordId);
+      this.ticketId = ticketId;
+      this.request = showLabels;
+      this.valetSelection = "checkoutCar";
+      this.valetSlipForm = true;
+      this.hideAllButtons = !showLabels ? true : false;
+    },
+    UpdateListOfCars(){
       ValetService.getAllTheInfo().then((response) => {
       this.$store.commit("LOAD_CAR_LIST", response.data);
       
