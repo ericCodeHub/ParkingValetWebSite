@@ -2,13 +2,13 @@
   <div>
     <h3
       v-if="
-        this.valetSelection == 'pickupCar' ||
+        this.valetSelection == 'pickupCar' && ShowLabels ||
         this.patronSelection == 'pickupCar'
       "
     >
       REQUEST CAR PICKUP
     </h3>
-    <h3 v-if="ShowLabels" >CHECK-OUT</h3>
+    <h3 v-if="ShowLabels && valetSelection == 'checkoutCar'" >CHECK-OUT</h3>
     <h3 v-if="this.patronSelection == 'showBalance'">VIEW BALANCE</h3>
     
       <b-form @submit="PatronCarDetailsSubmit" @reset="onReset" v-if="show" class="vertical-buttons">
@@ -56,14 +56,29 @@
     </b-form>
 
     <h3 v-if="showValetCall">The valet will arrive shortly with your car.</h3>
-    <div v-if="showAmountOwed"><h3>AMOUNT OWED {{ this.finalAmountOwed }}  &nbsp;
+    <div v-if="ShowAmountOwedScreen"><h3>AMOUNT OWED {{ this.finalAmountOwed }}  &nbsp;
       <b-button style="display: inline" variant="primary" size="lg" @click="$emit('complete-checkout')">
       <!--complete-checkout is in ValetView component-->
           PAID
           </b-button></h3>
+          <!--
+          **The cancel button requires more revision of the
+          website flow:
+          *car would need to be checked back in; better to change car status and change status back at cancellation then fully check car out on paid button click
+          <b-col sm="3">
+            <b-button @click="onCancel, $emit('click-cancel')" variant="danger" class="h-75">Cancel</b-button>
+        </b-col>
+        -->
     
      </div>
-    <h3 v-if="showValetRequestMessage">Pickup request from Valet received</h3>
+     <div v-if="showValetRequestMessage" class="vertical-buttons">       
+        <b-col>
+          <h3>Pickup request from Valet received</h3>
+        </b-col>
+        <b-col sm="3">
+            <b-button @click="$emit('update-requested-cars')" variant="success" class="h-75">Ok</b-button>
+        </b-col>
+     </div>
     <patron-car-details v-if="showPatronCar" v-bind:slipId="slipId" />
   </div>
 </template>   
@@ -77,7 +92,7 @@ import ParkingService from "@/services/ParkingLotService.js";
 export default {
   slipId: "",
   
-  props: ["patronSelection", "valetSelection", "request", "ticketId"],
+  props: ["patronSelection", "valetSelection", "request", "ticketId", "fromCarList"],
   data() {
     return {
       form: {
@@ -95,10 +110,22 @@ export default {
     };
   },
   components: { PatronCarDetails },
+  watch: {
+    fromCarList: {
+      immediate: true,
+      handler: 'SkipSlipIDEntry'
+    }    
+  },  
   computed: {
     ShowLabels() {
       console.log(this.request)
-      if (this.valetSelection == 'checkoutCar') {
+      if (this.valetSelection == 'checkoutCar' || this.valetSelection == 'pickupCar') {
+        //checkoutCar can come from ListOfCars or ValetView
+        if (this.fromCarList) {
+          //request from ListOfCars will have ticketId
+          //so go straight to amount Owed screen          
+          return false
+        }
         if (this.request == undefined || this.request) {          
           return true
         } else {
@@ -106,13 +133,24 @@ export default {
         }
       } else {
         return false
-      }      
-                 
+      }                       
+    },
+    ShowAmountOwedScreen() {
+      if (this.showAmountOwed || this.fromCarList) {
+        if (this.valetSelection == 'pickupCar') {
+          return false;
+        }
+      } else {
+        return true;
+      }
+      return false;
     }
   },
   methods: {
     PatronCarDetailsSubmit(evt) {
-      evt.preventDefault();
+      if (!this.fromCarList) {
+        evt.preventDefault();
+      }      
       PatronService.getValetSlip(this.form.valetSlipNumber).then((response) => {
         if (response.data != "") {
           //as long as ID exists, do this . .
@@ -135,14 +173,12 @@ export default {
             );
             this.showValetRequestMessage = !this.showValetRequestMessage;
             this.show = false;
-          } else if (this.valetSelection == "checkoutCar") {
+          } else if (this.valetSelection == "checkoutCar") {            
             CarDetailsService.checkoutCar(this.form.valetSlipNumber).then(
               (response) => {
                 this.finalAmountOwed =
                   "$" + response.data.amountOwed.toFixed(2);
-                (this.show = false), (this.showAmountOwed = true);
-
-                
+                (this.show = false), (this.showAmountOwed = true);                
               }
               
             );
@@ -153,6 +189,14 @@ export default {
           alert("Please enter a valid slip number");
         }
       });
+    },
+    SkipSlipIDEntry() {
+      if (this.fromCarList) {
+        
+        this.form.valetSlipNumber=this.ticketId;
+        this.PatronCarDetailsSubmit(this.form.name);   
+        
+      }
     },
     onSubmitPatronRequest() {
       this.show = false;
@@ -181,7 +225,7 @@ export default {
       evt.preventDefault();
       this.form.slipId = "";
       this.show = false;
-    },
+    }
   },
 };
 </script>

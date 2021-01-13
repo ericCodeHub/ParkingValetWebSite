@@ -66,10 +66,10 @@
               
             </b-button>
             
-            <b-button size="sm" @click="showValetSlipForm(row.item.ticketId, false, row.item.licensePlate), filter=row.item.licensePlate">
+            <b-button name="checkoutCar" ref="myRef" size="sm" @click="showValetSlipForm(row.item.ticketId, false, row.item.licensePlate), filter=row.item.licensePlate">
               Check Out Car
             </b-button>
-            <b-button size="sm" @click="filter=row.item.licensePlate">
+            <b-button name="pickupCar" ref="myRef" size="sm" @click="showValetSlipForm(row.item.ticketId, false, row.item.licensePlate), filter=row.item.licensePlate">
               Request Pickup
             </b-button>
             </div>
@@ -83,8 +83,10 @@
             <valet-slip v-if="valetSlipForm" v-bind:ticketId="ticketId" 
             v-bind:request="request"
             v-bind:valetSelection="valetSelection"
+            v-bind:fromCarList="fromCarList"
             v-on:complete-checkout="hideAllButtons=false, valetSlipForm = false, filter=null, $emit('complete-checkout')"
             v-on:click-cancel="hideAllButtons=false, valetSlipForm = false, filter=null"
+            v-on:update-requested-cars="$emit('update-requested-cars'), hideAllButtons=false, valetSlipForm=false, filter=null"
             />
             
             </div>
@@ -227,6 +229,7 @@ export default {
       valetSelection: "",
       ticketId: "",
       request: "",
+      fromCarList: "",
       hideAllButtons: false,
     };
   },
@@ -273,9 +276,10 @@ export default {
       console.log(recordId);
       this.ticketId = ticketId;
       this.request = showLabels;
-      this.valetSelection = "checkoutCar";
+      this.valetSelection = event.target.name;
       this.valetSlipForm = true;
       this.hideAllButtons = !showLabels ? true : false;
+      this.fromCarList = true;
     },
     UpdateListOfCars(){
       ValetService.getAllTheInfo().then((response) => {
@@ -289,12 +293,17 @@ export default {
       this.hideAllButtons=false;
       this.showParkingSpotForm=false;
     },
-    tryOut(recordId){
+    tryOut(){
       
-      alert(recordId);
+      //alert(recordId.target.type);
+      //alert(this.$refs.myRef.name)
+      alert(event.target.name)
       //this.filter = recordId;
       //this.$refs.table.filter("13");
-    }
+    },
+    tryOut2(){
+        alert(this.$refs.myRef.name)
+    },
   },
 };
 </script>

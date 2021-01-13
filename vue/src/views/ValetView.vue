@@ -87,14 +87,16 @@
         />
       </div>
       <div class="componentsValet" v-if="showValetSlipIdForm" >
-        <valet-slip v-bind:valetSelection="valetSelection" @complete-checkout="CompleteCheckOut(), this.showValetSlipIdForm = !this.showValetSlipIdForm,
-        this.checkoutButton = !this.checkoutButton" v-on:click-cancel="checkoutButton = false, showValetSlipIdForm=false"
+        <valet-slip v-bind:valetSelection="valetSelection" @complete-checkout="CompleteCheckOut(),showValetSlipIdForm = false,
+        checkoutButton = !checkoutButton" v-on:click-cancel="checkoutButton = false, showValetSlipIdForm=false"
         
         />
       </div>
 
       <div class="componentsValet" v-if="showListOfCars"  v-on:clickOk="checkoutButton = false, showValetSlipIdForm=false">
-        <list-of-cars @complete-checkout="CompleteCheckOut()"/>
+        <list-of-cars @complete-checkout="CompleteCheckOut()"
+        v-on:update-requested-cars="UpdateListOfRequestedCars()"
+        />
       </div>
       <div class="componentsValet" v-if="showRequestedCars">
         <cars-req-for-pickup v-if="showRequestedCars" />
@@ -188,6 +190,12 @@ export default {
       ValetService.getAllTheInfo().then((response) => {
       this.$store.commit("LOAD_CAR_LIST", response.data);
       })
+    },
+    UpdateListOfRequestedCars() {
+      //same as in created property of CarsReqForPickup
+      ValetService.getListOfRequestedCars().then((response) => {
+      this.$store.commit("LOAD_REQUESTED_CAR_LIST", response.data);
+    });
     },
   },
 };
