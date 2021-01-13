@@ -87,14 +87,16 @@
         />
       </div>
       <div class="componentsValet" v-if="showValetSlipIdForm" >
-        <valet-slip v-bind:valetSelection="valetSelection" @complete-checkout="CompleteCheckOut(),showValetSlipIdForm = false,
-        checkoutButton = !checkoutButton" v-on:click-cancel="checkoutButton = false, showValetSlipIdForm=false"
+        <valet-slip v-bind:valetSelection="valetSelection" @complete-checkout="CompleteCheckOut(), UpdateListOfRequestedCars(), showValetSlipIdForm = false,
+        checkoutButton = !checkoutButton" 
+        v-on:update-requested-cars="UpdateListOfRequestedCars(), showValetSlipIdForm=false, checkoutButton = false"
+        v-on:click-cancel="checkoutButton = false, showValetSlipIdForm=false"
         
         />
       </div>
 
       <div class="componentsValet" v-if="showListOfCars"  v-on:clickOk="checkoutButton = false, showValetSlipIdForm=false">
-        <list-of-cars @complete-checkout="CompleteCheckOut()"
+        <list-of-cars @complete-checkout="CompleteCheckOut(), UpdateListOfRequestedCars()"
         v-on:update-requested-cars="UpdateListOfRequestedCars()"
         />
       </div>

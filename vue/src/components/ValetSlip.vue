@@ -56,11 +56,13 @@
     </b-form>
 
     <h3 v-if="showValetCall">The valet will arrive shortly with your car.</h3>
-    <div v-if="ShowAmountOwedScreen"><h3>AMOUNT OWED {{ this.finalAmountOwed }}  &nbsp;
-      <b-button style="display: inline" variant="primary" size="lg" @click="$emit('complete-checkout')">
-      <!--complete-checkout is in ValetView component-->
-          PAID
-          </b-button></h3>
+    <div v-if="ShowAmountOwedScreen">
+      <h3>AMOUNT OWED {{ this.finalAmountOwed }}  &nbsp;
+        <b-button style="display: inline" variant="primary" size="lg" @click="$emit('complete-checkout')">
+        <!--complete-checkout is in ValetView component-->
+            PAID
+        </b-button>
+      </h3>
           <!--
           **The cancel button requires more revision of the
           website flow:
@@ -107,6 +109,7 @@ export default {
       showAmountOwed: false,
       showValetRequestMessage: false,
       
+      
     };
   },
   components: { PatronCarDetails },
@@ -118,7 +121,7 @@ export default {
   },  
   computed: {
     ShowLabels() {
-      console.log(this.request)
+      
       if (this.valetSelection == 'checkoutCar' || this.valetSelection == 'pickupCar') {
         //checkoutCar can come from ListOfCars or ValetView
         if (this.fromCarList) {
@@ -136,14 +139,17 @@ export default {
       }                       
     },
     ShowAmountOwedScreen() {
+      console.log(this.showAmountOwed)
       if (this.showAmountOwed || this.fromCarList) {
         if (this.valetSelection == 'pickupCar') {
           return false;
+        } else {
+          return true
         }
       } else {
-        return true;
+        return false;
       }
-      return false;
+      
     }
   },
   methods: {
