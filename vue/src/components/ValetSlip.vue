@@ -56,23 +56,12 @@
     </b-form>
 
     <h3 v-if="showValetCall">The valet will arrive shortly with your car.</h3>
-    <div v-if="ShowAmountOwedScreen">
-      <h3>AMOUNT OWED {{ this.finalAmountOwed }}  &nbsp;
-        <b-button style="display: inline" variant="primary" size="lg" @click="$emit('complete-checkout')">
-        <!--complete-checkout is in ValetView component-->
-            PAID
-        </b-button>
-      </h3>
-          <!--
-          **The cancel button requires more revision of the
-          website flow:
-          *car would need to be checked back in; better to change car status and change status back at cancellation then fully check car out on paid button click
-          <b-col sm="3">
-            <b-button @click="onCancel, $emit('click-cancel')" variant="danger" class="h-75">Cancel</b-button>
-        </b-col>
-        -->
-    
-     </div>
+    <div>
+      <amount-owed v-if="showAmountOwed"
+      v-bind:amountOwed="this.finalAmountOwed"
+      v-on:complete-checkout="$emit('complete-checkout')"
+      />
+    </div>
      <div v-if="showValetRequestMessage" class="vertical-buttons">       
         <b-col>
           <h3>Pickup request from Valet received</h3>
@@ -90,6 +79,7 @@ import PatronCarDetails from "@/components/PatronCarDetails.vue";
 import PatronService from "@/services/PatronService.js";
 import CarDetailsService from "@/services/CarDetailsService.js";
 import ParkingService from "@/services/ParkingLotService.js";
+import AmountOwed from './AmountOwed.vue';
 
 export default {
   slipId: "",
@@ -112,7 +102,7 @@ export default {
       
     };
   },
-  components: { PatronCarDetails },
+  components: { PatronCarDetails, AmountOwed },
   watch: {
     fromCarList: {
       immediate: true,

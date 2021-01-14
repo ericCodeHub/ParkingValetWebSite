@@ -66,7 +66,7 @@
               
             </b-button>
             
-            <b-button name="checkoutCar" ref="myRef" size="sm" @click="showValetSlipForm(row.item.ticketId, false, row.item.licensePlate), filter=row.item.licensePlate">
+            <b-button name="checkoutCar" ref="myRef" size="sm" @click="ShowAmountOwed(row.item.ticketId), filter=row.item.licensePlate">
               Check Out Car
             </b-button>
             <b-button name="pickupCar" ref="myRef" size="sm" @click="showValetSlipForm(row.item.ticketId, false, row.item.licensePlate), filter=row.item.licensePlate">
@@ -87,6 +87,10 @@
             v-on:complete-checkout="hideAllButtons=false, valetSlipForm = false, filter=null, $emit('complete-checkout')"
             v-on:click-cancel="hideAllButtons=false, valetSlipForm = false, filter=null"
             v-on:update-requested-cars="$emit('update-requested-cars'), hideAllButtons=false, valetSlipForm=false, filter=null"
+            />
+            <amount-owed v-if="showAmountOwed"
+            v-bind:amountOwed="finalAmountOwed"
+            v-on:complete-checkout="hideAllButtons=false, showAmountOwed = false, filter=null, $emit('complete-checkout')"
             />
             
             </div>
@@ -193,11 +197,15 @@ import ValetService from "@/services/ValetService.js";
 import moment from "moment";
 import UpdateSpotId from "@/components/UpdateSpotId.vue";
 import ValetSlip from './ValetSlip.vue';
+import PatronService from "@/services/PatronService.js";
+import CarDetailsService from "@/services/CarDetailsService.js";
+import AmountOwed from './AmountOwed.vue';
+
 
 export default {
   name: "list-of-cars",
 
-  components: { UpdateSpotId, ValetSlip },
+  components: { UpdateSpotId, ValetSlip, AmountOwed },
   created() {
     this.UpdateListOfCars();
   },
@@ -231,6 +239,7 @@ export default {
       request: "",
       fromCarList: "",
       hideAllButtons: false,
+      showAmountOwed: false,
     };
   },
   computed: {
@@ -289,21 +298,37 @@ export default {
     });
     this.$forceUpdate();
     },
+    ShowAmountOwed(ticketId) {
+      console.log("not ready")
+      this.hideAllButtons = true;
+      this.showAmountOwed = true;
+      PatronService.getValetSlip(ticketId).then((response) => {
+        if (response.data != "") {
+          CarDetailsService.checkoutCar(ticketId).then(
+              (response) => {
+                this.finalAmountOwed =
+                  "$" + response.data.amountOwed.toFixed(2);
+                //this.show = false;
+                this.showAmountOwed = true;
+              });
+        
+        }
+      });
+    },
     cancelButton() {
       this.hideAllButtons=false;
       this.showParkingSpotForm=false;
     },
-    tryOut(){
+    tryOut(data){
       
-      //alert(recordId.target.type);
+      alert(data);
+      this.$emit('show-amount-owed','hello')
       //alert(this.$refs.myRef.name)
-      alert(event.target.name)
+      //alert(event.target.name)
       //this.filter = recordId;
       //this.$refs.table.filter("13");
     },
-    tryOut2(){
-        alert(this.$refs.myRef.name)
-    },
+    
   },
 };
 </script>

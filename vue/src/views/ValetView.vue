@@ -98,6 +98,7 @@
       <div class="componentsValet" v-if="showListOfCars"  v-on:clickOk="checkoutButton = false, showValetSlipIdForm=false">
         <list-of-cars @complete-checkout="CompleteCheckOut(), UpdateListOfRequestedCars()"
         v-on:update-requested-cars="UpdateListOfRequestedCars()"
+        v-on:show-amount-owed="GetSomeLove"
         />
       </div>
       <div class="componentsValet" v-if="showRequestedCars">
@@ -118,6 +119,8 @@ import LicensePlateEntry from "../components/LicensePlateEntry.vue";
 import CarsReqForPickup from "../components/CarsReqForPickup.vue";
 import ParkingService from "@/services/ParkingLotService.js";
 import ValetService from "@/services/ValetService.js";
+
+
 
 export default {
   components: {
@@ -199,6 +202,11 @@ export default {
       this.$store.commit("LOAD_REQUESTED_CAR_LIST", response.data);
     });
     },
+    
+    
+    GetSomeLove(myProp){
+      alert(myProp + ": Here it is")
+    }
   },
 };
 </script>
