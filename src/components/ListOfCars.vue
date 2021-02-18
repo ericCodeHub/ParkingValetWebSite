@@ -61,7 +61,7 @@
             <b-button size="sm" @click="row.toggleDetails">
               {{ row.detailsShowing ? "Hide" : "Show" }} Details
             </b-button>
-            <b-button size="sm" @click="showParkingSpotForm(row.item.ticketId,false, row.item.licensePlate), filter=row.item.licensePlate">
+            <b-button size="sm" @click="showParkingSpotForm(row.item.ticketId,false), filter=row.item.licensePlate">
               Park Car
               
             </b-button>
@@ -69,7 +69,7 @@
             <b-button name="checkoutCar" ref="myRef" size="sm" @click="ShowAmountOwed(row.item.ticketId), filter=row.item.licensePlate">
               Check Out Car
             </b-button>
-            <b-button name="pickupCar" ref="myRef" size="sm" @click="showValetSlipForm(row.item.ticketId, false, row.item.licensePlate), filter=row.item.licensePlate">
+            <b-button name="pickupCar" ref="myRef" size="sm" @click="showValetSlipForm(row.item.ticketId, false), filter=row.item.licensePlate">
               Request Pickup
             </b-button>
             </div>
@@ -272,17 +272,17 @@ export default {
       this.totalRows = filteredItems.length;
       this.currentPage = 1;
     },
-    showParkingSpotForm(ticketId, showLabels, recordId) {
+    showParkingSpotForm(ticketId, showLabels) {
       //recordId should typically be the license plate
-      console.log(recordId);
+      //console.log(recordId);
       this.ticketId = ticketId;
       this.request = showLabels;
       this.parkingSpotForm = true;
       this.hideAllButtons = !showLabels ? true : false;
     },
-    showValetSlipForm(ticketId, showLabels, recordId) {
+    showValetSlipForm(ticketId, showLabels) {
       //recordId should typically be the license plate
-      console.log(recordId);
+      //console.log(recordId);
       this.ticketId = ticketId;
       this.request = showLabels;
       this.valetSelection = event.target.name;
@@ -299,7 +299,7 @@ export default {
     this.$forceUpdate();
     },
     ShowAmountOwed(ticketId) {
-      console.log("not ready")
+      //console.log("not ready")
       this.hideAllButtons = true;
       this.showAmountOwed = true;
       PatronService.getValetSlip(ticketId).then((response) => {

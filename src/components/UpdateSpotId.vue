@@ -93,7 +93,7 @@ export default {
                   this.show = false;
                   this.showSpotUpdatedMessage = true;
                   
-                  console.log(this.parkingLotSpots);
+                  //console.log(this.parkingLotSpots);
                   //this.UpdateParkingLot();
                   this.UpdateParkingLot();
                   

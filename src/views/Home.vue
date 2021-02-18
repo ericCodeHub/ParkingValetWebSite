@@ -59,13 +59,7 @@ export default {
   color: red;
 }
 
-.container-text li {
-  list-style: none;
-  text-align: left;
-  font-size: 90%;
-  color: rgb(230, 230, 230);
-  padding-right: 50%;
-}
+
 s #available-box {
   background-color: green;
   color: green;
@@ -77,15 +71,7 @@ s #available-box {
   width: 20px;
 }
 
-#home-parking-lot-container-yes {
-  color: white;
-  background-image: url("../img/p-lot-background.jpg");
-  padding-top: 3%;
-  padding-bottom: 0.05%;
-  font-family: "Jua";
-  text-transform: uppercase;
-  text-align: center;
-}
+
 
 #home-parking-lot-container {
   color: white;

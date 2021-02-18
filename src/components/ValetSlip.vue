@@ -129,7 +129,7 @@ export default {
       }                       
     },
     ShowAmountOwedScreen() {
-      console.log(this.showAmountOwed)
+      //console.log(this.showAmountOwed)
       if (this.showAmountOwed || this.fromCarList) {
         if (this.valetSelection == 'pickupCar') {
           return false;
@@ -160,7 +160,7 @@ export default {
             CarDetailsService.changeParkingSpotStatus(
               this.form.valetSlipNumber
             ).then((response) => {
-              console.log(response.status);
+              //console.log(response.status);
             });
             //verify that the Valet Slip ID exists***
           } else if (this.valetSelection == "pickupCar") {
