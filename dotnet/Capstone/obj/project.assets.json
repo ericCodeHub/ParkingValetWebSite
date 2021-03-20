@@ -12163,11 +12163,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Eric\\OneDrive\\Documents\\GitHub\\parkingValet\\dotnet\\Capstone\\Capstone.csproj",
+      "projectUniqueName": "C:\\GitHub_C\\parkingValet\\dotnet\\Capstone\\Capstone.csproj",
       "projectName": "Capstone",
-      "projectPath": "C:\\Users\\Eric\\OneDrive\\Documents\\GitHub\\parkingValet\\dotnet\\Capstone\\Capstone.csproj",
+      "projectPath": "C:\\GitHub_C\\parkingValet\\dotnet\\Capstone\\Capstone.csproj",
       "packagesPath": "C:\\Users\\Eric\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Eric\\OneDrive\\Documents\\GitHub\\parkingValet\\dotnet\\Capstone\\obj\\",
+      "outputPath": "C:\\GitHub_C\\parkingValet\\dotnet\\Capstone\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Microsoft\\Xamarin\\NuGet\\"

@@ -1,17 +1,18 @@
-USE master
-GO
+--USE master
+--GO
 
 --drop database if it exists
-IF DB_ID('final_capstone') IS NOT NULL
+IF DB_ID('parking_valet_db') IS NOT NULL
 BEGIN
-	ALTER DATABASE final_capstone SET SINGLE_USER WITH ROLLBACK IMMEDIATE;
-	DROP DATABASE final_capstone;
+	ALTER DATABASE "parking_valet_db" SET SINGLE_USER WITH ROLLBACK IMMEDIATE;
+	DROP DATABASE "parking_valet_db";
 END
 
-CREATE DATABASE final_capstone
+CREATE DATABASE parking_valet_db
 GO
 
-USE final_capstone
+--if running in Azure SQL, comment out USE and GO below (next two lines)
+USE parking_valet_db
 GO
 
 --create tables

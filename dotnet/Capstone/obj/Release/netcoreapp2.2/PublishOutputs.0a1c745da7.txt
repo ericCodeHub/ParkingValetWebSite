@@ -1,0 +1,7 @@
+C:\GitHub_C\parkingValet\dotnet\Capstone\obj\Release\netcoreapp2.2\PubTmp\Out\appsettings.Development.json
+C:\GitHub_C\parkingValet\dotnet\Capstone\obj\Release\netcoreapp2.2\PubTmp\Out\appsettings.json
+C:\GitHub_C\parkingValet\dotnet\Capstone\obj\Release\netcoreapp2.2\PubTmp\Out\appsettings.local.json
+C:\GitHub_C\parkingValet\dotnet\Capstone\obj\Release\netcoreapp2.2\PubTmp\Out\Capstone.dll
+C:\GitHub_C\parkingValet\dotnet\Capstone\obj\Release\netcoreapp2.2\PubTmp\Out\Capstone.runtimeconfig.json
+C:\GitHub_C\parkingValet\dotnet\Capstone\obj\Release\netcoreapp2.2\PubTmp\Out\Capstone.pdb
+C:\GitHub_C\parkingValet\dotnet\Capstone\obj\Release\netcoreapp2.2\PubTmp\Out\Capstone.deps.json

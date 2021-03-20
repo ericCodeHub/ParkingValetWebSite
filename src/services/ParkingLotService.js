@@ -1,15 +1,15 @@
 import axios from 'axios';
 
-const http = axios.create({
+/*const http = axios.create({
     baseURL: "https://localhost:44315"
-})
+})*/
 
 export default {
 
     getParkingSpots() {
-        return http.get('/parkingSpot');
+        return axios.get('/parkingSpot');
     },
     getCheckedInCars() {
-        return http.get('/vehicle');
+        return axios.get('/vehicle');
     }
 }

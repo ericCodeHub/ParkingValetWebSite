@@ -1,0 +1,10 @@
+{
+  "dependencies": {
+    "mssql1": {
+      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.Sql/servers/ice-cream-connection/databases/parking_valet_db",
+      "type": "mssql.azure",
+      "connectionId": "Project",
+      "secretStore": "AzureAppSettings"
+    }
+  }
+}

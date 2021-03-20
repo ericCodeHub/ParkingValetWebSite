@@ -20,7 +20,7 @@ namespace Capstone
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args).ConfigureAppConfiguration((hostingContext, config) =>
             {
-                config.AddJsonFile("appsettings.local.json", optional: true, reloadOnChange: true);
+                config.AddJsonFile($"appsettings.json", optional: true, reloadOnChange: true);
             })
             .UseStartup<Startup>();
             

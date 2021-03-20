@@ -49,7 +49,7 @@
         
         
       >
-      <!--I know now why this is here so commented out
+      <!--I don't know why this is here so commented out
         <template #cell(name)="row">
           where is this?{{ row.value.first }} {{ row.value.last }}
         </template>-->
